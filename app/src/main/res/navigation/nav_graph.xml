@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/mainFragment">
+
+    <!-- MainFragment -->
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.joe.taichungapp.ui.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <!-- Action to navigate to InfoDetailFragment -->
+        <action
+            android:id="@+id/action_mainFragment_to_infoDetailFragment"
+            app:destination="@id/infoDetailFragment" />
+    </fragment>
+
+    <!-- InfoDetailFragment -->
+    <fragment
+        android:id="@+id/infoDetailFragment"
+        android:name="com.joe.taichungapp.ui.InfoDetailFragment"
+        android:label="InfoDetailFragment"
+        tools:layout="@layout/fragment_info_detail">
+        <!-- Arguments for passing data -->
+        <argument
+            android:name="flowerInfo"
+            app:argType="com.joe.taichungapp.model.FlowerInfo"
+            app:nullable="true" />
+        <argument
+            android:name="attractionsInfo"
+            app:argType="com.joe.taichungapp.model.AttractionsInfo"
+            app:nullable="true" />
+    </fragment>
+
+</navigation>
