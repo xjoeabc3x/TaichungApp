@@ -16,7 +16,7 @@ object LocaleHelper {
     fun getCurrentLanguage(): String = Locale.getDefault().language
 
     fun toggleLanguage(context: Context): Context {
-        val newLang = if (getCurrentLanguage() == "en") "zh" else "en"
+        val newLang = if (getCurrentLanguage() == "en") "zh-rTW" else "en"
         return updateLocale(context, newLang)
     }
 }
