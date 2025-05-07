@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
+import com.joe.taichungapp.MainActivity
 import com.joe.taichungapp.R
 import com.joe.taichungapp.adapter.AttractionsAdapter
 import com.joe.taichungapp.adapter.FlowerAdapter
@@ -102,9 +103,7 @@ class MainFragment : Fragment() {
         Locale.setDefault(locale)
         val config = resources.configuration
         config.setLocale(locale)
-        requireActivity().apply {
-            resources.updateConfiguration(config, resources.displayMetrics)
-            recreate() // reload Activity to refresh language
-        }
+        resources.updateConfiguration(config, resources.displayMetrics)
+        (activity as MainActivity).recreate()// reload Activity to refresh language
     }
 }
