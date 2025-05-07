@@ -20,6 +20,7 @@ import java.util.Locale
 
 class MainFragment : Fragment() {
 
+    private val tag = "MainFragment"
     private val viewModel: MainViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var tabLayout: TabLayout
@@ -39,6 +40,15 @@ class MainFragment : Fragment() {
         tabLayout = view.findViewById(R.id.menuTab)
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.flower_list_title_flower)))
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.flower_list_title_sea)))
+
+        viewModel.flowers.observe(viewLifecycleOwner) { flowers ->
+            recyclerView.adapter = FlowerAdapter(flowers) { flowerInfo ->
+                // 使用 SafeArgs 傳遞 FlowerInfo
+                val action = MainFragmentDirections.actionMainFragmentToInfoDetailFragment(flowerInfo, null)
+                findNavController().navigate(action)
+            }
+        }
+        viewModel.fetchFlowers()
 
         // 設置 TabLayout 切換事件
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -77,9 +87,9 @@ class MainFragment : Fragment() {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedLanguage = if (position == 0) "en" else "zh"
+                val selectedLanguage = if (position == 0) "en" else "zh-rTW"
                 if (Locale.getDefault().language != selectedLanguage) {
-                    setLanguage(selectedLanguage)
+//                    setLanguage(selectedLanguage)
                 }
             }
 

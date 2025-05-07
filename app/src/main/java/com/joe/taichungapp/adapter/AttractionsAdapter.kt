@@ -10,7 +10,6 @@ import com.bumptech.glide.Glide
 import com.joe.taichungapp.R
 import com.joe.taichungapp.model.AttractionsInfo
 import java.util.Locale
-import timber.log.Timber
 
 class AttractionsAdapter(
     private val list: List<AttractionsInfo>,
