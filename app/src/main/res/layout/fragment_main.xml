@@ -22,22 +22,8 @@
         android:layout_below="@id/languageSpinner"
         android:layout_marginTop="16dp"
         app:tabIndicatorColor="@color/teal_200"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/black">
+        app:tabSelectedTextColor="@color/design_default_color_error">
 
-        <!-- Tab 1: Flower List -->
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabFlower"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/flower_list_title_flower" />
-
-        <!-- Tab 2: Sea List -->
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabSea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/flower_list_title_sea" />
 
     </com.google.android.material.tabs.TabLayout>
 
