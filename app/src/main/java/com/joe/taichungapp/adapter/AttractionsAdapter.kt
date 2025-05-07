@@ -18,9 +18,14 @@ class AttractionsAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.flowerName)
+        private val image: ImageView = view.findViewById(R.id.flowerImage)
         private val currentLanguage = Locale.getDefault().language.toString()
         fun bind(item: AttractionsInfo) {
-            name.text = if (currentLanguage == "zh") item.nameChinese else item.nameEnglish
+            name.text = if (currentLanguage == "zh-rTW") item.nameChinese else item.nameEnglish
+            // 使用 Glide 載入圖片
+            Glide.with(itemView.context)
+                .load(item.photoUrl1)
+                .into(image)
             itemView.setOnClickListener { onItemClick(item) }
         }
     }
