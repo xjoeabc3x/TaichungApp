@@ -13,7 +13,10 @@
         <!-- Action to navigate to InfoDetailFragment -->
         <action
             android:id="@+id/action_mainFragment_to_infoDetailFragment"
-            app:destination="@id/infoDetailFragment" />
+            app:destination="@id/infoDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="false"/>
     </fragment>
 
     <!-- InfoDetailFragment -->
@@ -22,6 +25,15 @@
         android:name="com.joe.taichungapp.ui.InfoDetailFragment"
         android:label="InfoDetailFragment"
         tools:layout="@layout/fragment_info_detail">
+
+        <!-- Action to navigate to WebViewFragment -->
+        <action
+            android:id="@+id/action_infoDetailFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpToInclusive="false"/>
+
         <!-- Arguments for passing data -->
         <argument
             android:name="flowerInfo"
@@ -30,6 +42,19 @@
         <argument
             android:name="attractionsInfo"
             app:argType="com.joe.taichungapp.model.AttractionsInfo"
+            app:nullable="true" />
+    </fragment>
+
+    <!-- WebViewFragment -->
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.joe.taichungapp.ui.WebViewFragment"
+        android:label="WebViewFragment"
+        tools:layout="@layout/fragment_webview">
+        <!-- Arguments for passing data -->
+        <argument
+            android:name="url"
+            app:argType="string"
             app:nullable="true" />
     </fragment>
 
