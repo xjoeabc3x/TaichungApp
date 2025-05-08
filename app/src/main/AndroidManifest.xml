@@ -23,11 +23,11 @@
         android:icon="@drawable/flower"
         android:roundIcon="@drawable/flower"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.DayNight"
         tools:targetApi="35">
 
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.App"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
