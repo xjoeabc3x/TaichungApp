@@ -8,13 +8,12 @@
     <!-- 語系選擇下拉式選單 (Spinner) 放置在右上角 -->
     <Spinner
         android:id="@+id/languageSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/languages"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
         android:layout_alignParentTop="true"
-        android:background="@color/white"/>
+        android:background="@color/gray"/>
 
     <!-- TabLayout 放置在 RecyclerView 上方 -->
     <com.google.android.material.tabs.TabLayout

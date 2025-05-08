@@ -15,8 +15,10 @@ class FlowerAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.flowerName)
+        val description: TextView = view.findViewById(R.id.flowerDescription)
         fun bind(item: FlowerInfo) {
             name.text = item.location ?: "-"
+            description.text = item.flowerType
             itemView.setOnClickListener { onItemClick(item) }
         }
     }

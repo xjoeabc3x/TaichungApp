@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,15 +17,17 @@ import com.joe.taichungapp.MainActivity
 import com.joe.taichungapp.R
 import com.joe.taichungapp.adapter.AttractionsAdapter
 import com.joe.taichungapp.adapter.FlowerAdapter
+import com.joe.taichungapp.util.LocaleHelper
 import com.joe.taichungapp.viewmodel.MainViewModel
 import java.util.Locale
 
 class MainFragment : Fragment() {
 
-    private val tag = "MainFragment"
     private val viewModel: MainViewModel by viewModels()
     private lateinit var recyclerView: RecyclerView
     private lateinit var tabLayout: TabLayout
+
+    private var isInitialLanguageSelection = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_main, container, false)
@@ -32,6 +35,41 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val spinner = view.findViewById<Spinner>(R.id.languageSpinner)
+
+        // 不用 android:entries，改用程式碼塞選項
+        val languages = listOf("En", "中")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        // 設定目前語言
+        val currentLang = LocaleHelper.getCurrentLanguage()
+        val selectedIndex = if (currentLang.startsWith("zh")) 1 else 0
+        spinner.setSelection(selectedIndex, false) // <- 第二參數 false 不觸發 listener
+
+        // 使用 onTouch 觸發真正的語言切換邏輯
+        var userTouched = false
+        spinner.setOnTouchListener { _, _ ->
+            userTouched = true
+            false
+        }
+
+        spinner.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, selectedView: View?, position: Int, id: Long) {
+                if (!userTouched) return
+                userTouched = false // reset flag
+
+                val selectedLang = if (position == 0) "en" else "zh-rTW"
+                if (LocaleHelper.getCurrentLanguage() != selectedLang) {
+                    LocaleHelper.updateLocale(requireContext(), selectedLang)
+                    requireActivity().recreate()
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        })
 
         // 初始化 RecyclerView
         recyclerView = view.findViewById(R.id.recyclerView)
@@ -82,20 +120,6 @@ class MainFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        // 設置語言切換 Spinner
-        val spinner = view.findViewById<Spinner>(R.id.languageSpinner)
-        spinner.setSelection(if (Locale.getDefault().language == "zh") 1 else 0)
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedLanguage = if (position == 0) "en" else "zh-rTW"
-                if (Locale.getDefault().language != selectedLanguage) {
-//                    setLanguage(selectedLanguage)
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
     }
 
     private fun setLanguage(languageCode: String) {

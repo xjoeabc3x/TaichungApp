@@ -1,5 +1,6 @@
 package com.joe.taichungapp.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +19,13 @@ class AttractionsAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.flowerName)
+        val description: TextView = view.findViewById(R.id.flowerDescription)
         private val image: ImageView = view.findViewById(R.id.flowerImage)
         private val currentLanguage = Locale.getDefault().language.toString()
         fun bind(item: AttractionsInfo) {
+            Log.d("test", "currentLanguage :$currentLanguage")
             name.text = if (currentLanguage == "zh-rTW") item.nameChinese else item.nameEnglish
+            description.text = if (currentLanguage == "zh-rTW") item.descriptionChinese else item.descriptionEnglish
             // 使用 Glide 載入圖片
             Glide.with(itemView.context)
                 .load(item.photoUrl1)

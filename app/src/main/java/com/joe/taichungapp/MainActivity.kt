@@ -1,19 +1,18 @@
 package com.joe.taichungapp
 
-import android.graphics.Color
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.fragment.NavHostFragment
+import com.joe.taichungapp.util.LocaleHelper
 
 class MainActivity : AppCompatActivity() {
-//    override fun attachBaseContext(newBase: Context) {
-//        val context = LocaleHelper.updateLocale(newBase, LocaleHelper.getCurrentLanguage())
-//        super.attachBaseContext(context)
-//    }
+    override fun attachBaseContext(newBase: Context) {
+        val localeUpdatedContext = LocaleHelper.applySavedLocale(newBase)
+        super.attachBaseContext(localeUpdatedContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
