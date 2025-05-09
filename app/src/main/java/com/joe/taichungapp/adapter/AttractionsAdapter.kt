@@ -24,8 +24,8 @@ class AttractionsAdapter(
         private val currentLanguage = Locale.getDefault().language.toString()
         fun bind(item: AttractionsInfo) {
             Log.d("test", "currentLanguage :$currentLanguage")
-            name.text = if (currentLanguage == "zh-rTW") item.nameChinese else item.nameEnglish
-            description.text = if (currentLanguage == "zh-rTW") item.descriptionChinese else item.descriptionEnglish
+            name.text = if (currentLanguage == "zh") item.nameChinese else item.nameEnglish
+            description.text = if (currentLanguage == "zh") item.descriptionChinese else item.descriptionEnglish
             // 使用 Glide 載入圖片
             Glide.with(itemView.context)
                 .load(item.photoUrl1)

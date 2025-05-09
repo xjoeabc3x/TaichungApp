@@ -9,9 +9,10 @@ import androidx.navigation.fragment.NavHostFragment
 import com.joe.taichungapp.util.LocaleHelper
 
 class MainActivity : AppCompatActivity() {
-    override fun attachBaseContext(newBase: Context) {
-        val localeUpdatedContext = LocaleHelper.applySavedLocale(newBase)
-        super.attachBaseContext(localeUpdatedContext)
+    override fun attachBaseContext(newBase: Context?) {
+        val language = LocaleHelper.getPersistedLanguage()
+        val context = newBase?.let { LocaleHelper.setLocale(it, language) }
+        super.attachBaseContext(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
