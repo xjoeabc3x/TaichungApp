@@ -57,38 +57,26 @@ class MainFragment : Fragment() {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.flower_list_title_flower)))
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.flower_list_title_sea)))
 
-        viewModel.flowers.observe(viewLifecycleOwner) { flowers ->
-            recyclerView.adapter = FlowerAdapter(flowers) { flowerInfo ->
-                // 使用 SafeArgs 傳遞 FlowerInfo
-                val action = MainFragmentDirections.actionMainFragmentToInfoDetailFragment(flowerInfo, null)
-                findNavController().navigate(action)
-            }
-        }
-        viewModel.fetchFlowers()
+        // 根據 ViewModel 中儲存的 index 選擇 tab
+        val selectedIndex = viewModel.selectedTabIndex
+        tabLayout.getTabAt(selectedIndex)?.select()
 
-        // 設置 TabLayout 切換事件
+        // 根據選擇的 tab 載入內容（避免重建時 always call setFlowerList）
+        when (selectedIndex) {
+            0 -> setFlowerList()
+            1 -> setAttractionsList()
+        }
+
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.text) {
-                    getString(R.string.flower_list_title_flower) -> {
-                        viewModel.flowers.observe(viewLifecycleOwner) { flowers ->
-                            recyclerView.adapter = FlowerAdapter(flowers) { flowerInfo ->
-                                // 使用 SafeArgs 傳遞 FlowerInfo
-                                val action = MainFragmentDirections.actionMainFragmentToInfoDetailFragment(flowerInfo, null)
-                                findNavController().navigate(action)
-                            }
-                        }
-                        viewModel.fetchFlowers()
+                when (tab?.position) {
+                    0 -> {
+                        viewModel.selectedTabIndex = 0
+                        setFlowerList()
                     }
-                    getString(R.string.flower_list_title_sea) -> {
-                        viewModel.attractions.observe(viewLifecycleOwner) { attractions ->
-                            recyclerView.adapter = AttractionsAdapter(attractions) { attractionsInfo ->
-                                // 使用 SafeArgs 傳遞 AttractionsInfo
-                                val action = MainFragmentDirections.actionMainFragmentToInfoDetailFragment(null, attractionsInfo)
-                                findNavController().navigate(action)
-                            }
-                        }
-                        viewModel.fetchAttractions()
+                    1 -> {
+                        viewModel.selectedTabIndex = 1
+                        setAttractionsList()
                     }
                 }
             }
@@ -97,6 +85,28 @@ class MainFragment : Fragment() {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
+    }
+
+    private fun setFlowerList() {
+        viewModel.flowers.observe(viewLifecycleOwner) { flowers ->
+            recyclerView.adapter = FlowerAdapter(flowers) { flowerInfo ->
+                // 使用 SafeArgs 傳遞 FlowerInfo
+                val action = MainFragmentDirections.actionMainFragmentToInfoDetailFragment(flowerInfo, null)
+                findNavController().navigate(action)
+            }
+        }
+        viewModel.fetchFlowers()
+    }
+
+    private fun setAttractionsList() {
+        viewModel.attractions.observe(viewLifecycleOwner) { attractions ->
+            recyclerView.adapter = AttractionsAdapter(attractions) { attractionsInfo ->
+                // 使用 SafeArgs 傳遞 AttractionsInfo
+                val action = MainFragmentDirections.actionMainFragmentToInfoDetailFragment(null, attractionsInfo)
+                findNavController().navigate(action)
+            }
+        }
+        viewModel.fetchAttractions()
     }
 
     private fun setLanguage(languageCode: String) {
