@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.joe.taichungapp.R
+import java.util.Locale
 
 class InfoDetailFragment : Fragment() {
 
@@ -39,6 +40,7 @@ class InfoDetailFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        val currentLanguage = Locale.getDefault().language.toString()
         if (flowerInfo != null) {
             titleTextView.text = flowerInfo.flowerType ?: "-"
             descriptionTextView.text = "觀賞時期: ${flowerInfo.viewingPeriod ?: "-"}"
@@ -47,10 +49,10 @@ class InfoDetailFragment : Fragment() {
             picture.visibility = View.GONE
             webButton.visibility = View.INVISIBLE
         } else if (attractionsInfo != null) {
-            titleTextView.text = attractionsInfo.nameChinese ?: "-"
-            descriptionTextView.text = attractionsInfo.descriptionChinese ?: "-"
-            addressTextView.text = "地址: ${attractionsInfo.addressChinese ?: "-"}"
-            otherInfoTextView.text = "電話: ${attractionsInfo.servicePhone ?: "-"}"
+            titleTextView.text = if (currentLanguage == "zh") attractionsInfo.nameChinese else attractionsInfo.nameEnglish
+            descriptionTextView.text = if (currentLanguage == "zh") attractionsInfo.descriptionChinese else attractionsInfo.descriptionEnglish
+            addressTextView.text = if (currentLanguage == "zh") attractionsInfo.addressChinese else attractionsInfo.addressEnglish
+            otherInfoTextView.text = attractionsInfo.servicePhone ?: "-"
             Glide.with(view.context)
                 .load(attractionsInfo.photoUrl1)
                 .into(picture)
