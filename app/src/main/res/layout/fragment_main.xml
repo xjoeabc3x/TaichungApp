@@ -13,9 +13,10 @@
         android:layout_margin="16dp"
         android:layout_alignParentTop="true"
         android:text="@string/selected_language"
-        android:background="@color/cardview_dark_background"
+        android:background="@drawable/bg_round_button"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        app:backgroundTint="@color/gray"/>
 
     <!-- TabLayout 放置在 RecyclerView 上方 -->
     <com.google.android.material.tabs.TabLayout
