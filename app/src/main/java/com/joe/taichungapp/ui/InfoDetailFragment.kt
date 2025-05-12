@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -26,12 +27,17 @@ class InfoDetailFragment : Fragment() {
         val flowerInfo = args.flowerInfo
         val attractionsInfo = args.attractionsInfo
 
+        val backbutton: ImageButton = view.findViewById(R.id.backButton)
         val titleTextView: TextView = view.findViewById(R.id.titleTextView)
         val descriptionTextView: TextView = view.findViewById(R.id.descriptionTextView)
         val addressTextView: TextView = view.findViewById(R.id.addressTextView)
         val otherInfoTextView: TextView = view.findViewById(R.id.otherInfoTextView)
         val picture: ImageView = view.findViewById(R.id.iv_info_detail_picture)
         val webButton: Button = view.findViewById(R.id.bt_website)
+
+        backbutton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         if (flowerInfo != null) {
             titleTextView.text = flowerInfo.flowerType ?: "-"
