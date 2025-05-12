@@ -19,6 +19,8 @@ class MainViewModel : ViewModel() {
     private val _attractions = MutableLiveData<List<AttractionsInfo>>()
     val attractions: LiveData<List<AttractionsInfo>> = _attractions
 
+    var selectedTabIndex: Int = 0
+
     fun fetchFlowers() {
         viewModelScope.launch {
             try {
